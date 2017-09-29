@@ -35,6 +35,7 @@ a = 0.2         b = 0.6
 ```
 ### Output ###
 ![https://plot.ly/~scottfones/93.svg](/demo_plots/PlotODETwoByTwo.svg)
+[Interactive Version](https://plot.ly/~scottfones/93.embed)
 
 ### Usage ###
 
