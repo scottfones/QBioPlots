@@ -14,11 +14,13 @@ The example solves a competition model with the following parameters:
 
 ### Model ###
 
-![equation 1 alt text](http://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20y_1%20%3D%20r_1x_1%5Cleft%20%28%20k_1%20-%20x_1%20-ax_2%20%5Cright%20%29/%20k_1)
+![y_1 = r_1*x_1(k_1 - x_1 - a*x_2) / k_1]
+(http://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20y_1%20%3D%20r_1x_1%5Cleft%20%28%20k_1%20-%20x_1%20-ax_2%20%5Cright%20%29/%20k_1)
 
-![equation 2 alt text](http://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20y_2%20%3D%20r_2x_2%5Cleft%20%28%20k_2%20-%20bx_1%20-%20x_2%20%5Cright%20%29%20/%20k_2)
+![y_2 = r_2*x_2(k_2 - b*x_1 - x_2) / k_2]
+(http://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20y_2%20%3D%20r_2x_2%5Cleft%20%28%20k_2%20-%20bx_1%20-%20x_2%20%5Cright%20%29%20/%20k_2)
 
 ### Parameters ###
-```
-test
-```
+> r_1 = 0.15
+>k_1 = 50
+>a = 0.2
