@@ -11,4 +11,4 @@ All of the classes assume online plotting, which requires [initialization](https
 
 | QBioPlots Classes |          |
 | ------- | ------ |
-| [PlotODETwoByTwo](https://github.com/scottfones/QBioPlots/docs/PlotODETwoByTwo.md) | \*[Overview](https://github.com/scottfones/QBioPlots#overview) |
+| [PlotODETwoByTwo](https://github.com/scottfones/QBioPlots/blob/master/docs/PlotODETwoByTwo.md) | \*[Overview](https://github.com/scottfones/QBioPlots#overview) |
