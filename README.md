@@ -11,11 +11,12 @@ All of the classes assume online plotting, which requires [initialization](https
 
 ## Classes ##
 
-*[PlotODETwoByTwo](https://github.com/scottfones/QBioPlots#plotodetwobytwo---2x2-ode-system)
-    *[Overview](https://github.com/scottfones/QBioPlots#overview) 
-    *[Demo](https://github.com/scottfones/QBioPlots#overview) 
-    *[Demo Model](https://github.com/scottfones/QBioPlots#overview) 
-    *[Demo Parameters](https://github.com/scottfones/QBioPlots#overview) 
+-[PlotODETwoByTwo](https://github.com/scottfones/QBioPlots#plotodetwobytwo---2x2-ode-system)
+    -[Overview](https://github.com/scottfones/QBioPlots#overview) 
+    -[Demo](https://github.com/scottfones/QBioPlots#demo) 
+    -[Demo Model](https://github.com/scottfones/QBioPlots#demo-model)
+    -[Demo Parameters](https://github.com/scottfones/QBioPlots#demo-parameters) 
+    -[Usage](https://github.com/scottfones/QBioPlots#usage) 
 
 ## PlotODETwoByTwo - 2x2 ODE System
 
