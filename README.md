@@ -7,7 +7,7 @@ A collection of classes that solve common quantitative biology problems.
 * [plotly](https://plot.ly/) 
 * scipy
 
-All of the classes assume online plotting, which requires [initialization](https://plot.ly/python/getting-started/). To switch to offline plotting use a find and replace: py.plot -> py.offline.plot
+All of the classes assume online plotting, which requires [initialization](https://plot.ly/python/getting-started/). To switch to offline plotting use a find and replace on QBioPlots.py: py.plot -> py.offline.plot.
 
 ## PlotODETwoByTwo - 2x2 ODE System
 
