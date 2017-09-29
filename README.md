@@ -88,3 +88,4 @@ init_conds = [1,1]
 
 ode22(steps, x_start, x_end, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds)
 ```
+**NOTE**: Equations one and two must defined using `lambda x1, x2: ` before your expression. The lambda functions are required to pass the expressions as parameters.
