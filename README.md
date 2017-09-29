@@ -19,6 +19,14 @@ The example solves a competition model with the following parameters:
 ![y_2 = r_2*x_2(k_2 - b*x_1 - x_2) / k_2](http://latex.codecogs.com/png.latex?%5Cdpi%7B150%7D%20%5Cfn_cm%20y_2%20%3D%20r_2x_2%5Cleft%20%28%20k_2%20-%20bx_1%20-%20x_2%20%5Cright%20%29%20/%20k_2)
 
 ### Parameters ###
-> r_1 = 0.15
->k_1 = 50
->a = 0.2
+```
+r_1 = 0.15      r_2 = 0.3
+k_1 = 50        k_2 = 60
+a = 0.2         b = 0.6
+```
+
+y_1 | y2
+------ | ------
+r_1 = 0.15|r_2 = 0.3
+k_1 = 50|k_2 = 60
+a = 0.2|b = 0.6
