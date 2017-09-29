@@ -7,13 +7,14 @@ import plotly.figure_factory as ff
 from scipy.integrate import odeint
 
 class PlotODETwoByTwo (object):
-    'Uses Plot.ly to plot solutions to a 2x2 system of ODEs. The input equations must be written with v1 and v2 as the variables'
+    'Uses Plot.ly to plot solutions to a 2x2 system of ODEs. The input equations must be written with x1 and x2 as the variables'
 
-    def __init__(self, steps, x_start, x_end, y_start, y_end, figure_title, x_label, y_label, v1_label, v2_label, eqn1, eqn2, init_conds = []):
+    def __init__(self, steps, x_start, x_end, figure_title, x_label,
+                 y_label, x1_label, x2_label, eqn1, eqn2, init_conds = []):
         """Solves and Plots 2x2 Systems of ODEs
 
-           Parameters:  (steps, x_start, x_end, y_start, y_end, figure_title, x_label, y_label, 
-                         v1_label, v2_label, eqn1, eqn2, initial_conds[])
+           Parameters:  (steps, x_start, x_end, figure_title, x_label, 
+                         y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
                         steps - The number of values on which the ODEs should be evaluated
 
@@ -23,11 +24,11 @@ class PlotODETwoByTwo (object):
 
         def f(init_conds, t):
             'Function that defines system of equations and takes aninitial condition'
-            v1 = init_conds[0]
-            v2 = init_conds[1]
+            x1 = init_conds[0]
+            x2 = init_conds[1]
 
-            f0 = eqn1(v1,v2)
-            f1 = eqn2(v1,v2)
+            f0 = eqn1(x1,x2)
+            f1 = eqn2(x1,x2)
 
             return [f0, f1]
 
@@ -42,7 +43,7 @@ class PlotODETwoByTwo (object):
             x = t,
             y = y1,
             mode = 'lines',
-            name = v1_label,
+            name = x1_label,
             line = dict(
                 width = 5
             )
@@ -52,7 +53,7 @@ class PlotODETwoByTwo (object):
             x = t,
             y = y2,
             mode = 'lines',
-            name = v2_label,
+            name = x2_label,
             line = dict(
                 width = 5
             )   
@@ -105,8 +106,6 @@ class PlotODETwoByTwo (object):
         steps = 200
         x_start = 0
         x_end = 100
-        y_start = 0
-        y_end = 50
 
         r_1 = 0.15
         k_1 = 50
@@ -119,14 +118,14 @@ class PlotODETwoByTwo (object):
         figure_title = "Demo: 2x2 Nonlinear ODE System"
         x_label = "time (days)"
         y_label = "population"
-        v1_label = "Population 1"
-        v2_label = "Population 2"
+        x1_label = "Population 1"
+        x2_label = "Population 2"
 
-        eqn1 = lambda v1,v2: 0.15*v1 * (50 - v1 - 0.2*v2) / 50
-        eqn2 = lambda v1,v2: 0.3*v2 * (60 - 0.6*v1 - v2) / 60
+        eqn1 = lambda x1,x2: 0.15*x1 * (50 - x1 - 0.2*x2) / 50
+        eqn2 = lambda x1,x2: 0.3*x2 * (60 - 0.6*x1 - x2) / 60
         init_conds = [1,1]
 
-        cls(steps, x_start, x_end, y_start, y_end, figure_title, x_label, y_label, v1_label, v2_label, eqn1, eqn2, init_conds)
+        cls(steps, x_start, x_end, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds)
 
 
 '''
