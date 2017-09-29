@@ -34,7 +34,7 @@ k_1 = 50        k_2 = 60
 a = 0.2         b = 0.6
 ```
 ### Output ###
-![https://plot.ly/~scottfones/93/demo-2x2-nonlinear-ode-system/](https://plot.ly/~scottfones/93.png)
+![https://plot.ly/~scottfones/93.png](https://plot.ly/~scottfones/93.png)
 
 ### Usage ###
 
