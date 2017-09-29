@@ -1,8 +1,6 @@
 import numpy as np
-import sympy as sy
 import plotly.plotly as py
 import plotly.graph_objs as go
-import matplotlib.pyplot as plt
 import plotly.figure_factory as ff
 from scipy.integrate import odeint
 
@@ -103,26 +101,33 @@ class PlotODETwoByTwo (object):
     def demo(cls):
         'Creates instance with predefined variables to serve as an example'
 
+        # Solution Parameters
         steps = 200
         x_start = 0
         x_end = 100
 
+        # y_1
         r_1 = 0.15
         k_1 = 50
         a = 0.2
 
+        # y_2 
         r_2 = 0.3
         k_2 = 60
         b = 0.6
 
+        # Plot Labels
         figure_title = "Demo: 2x2 Nonlinear ODE System"
         x_label = "time (days)"
         y_label = "population"
         x1_label = "Population 1"
         x2_label = "Population 2"
 
-        eqn1 = lambda x1,x2: 0.15*x1 * (50 - x1 - 0.2*x2) / 50
-        eqn2 = lambda x1,x2: 0.3*x2 * (60 - 0.6*x1 - x2) / 60
+        # Equations
+        eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
+        eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
+
+        # Initial Conditions
         init_conds = [1,1]
 
         cls(steps, x_start, x_end, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds)
