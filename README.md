@@ -7,7 +7,8 @@ A collection of classes that solve common quantitative biology problems.
 * [plotly](https://plot.ly/) 
 * scipy
 
-All of the classes assume online plotting, which requires [initialization](https://plot.ly/python/getting-started/)
+All of the classes assume online plotting, which requires [initialization](https://plot.ly/python/getting-started/). To switch to offline plotting use a find and replace: py.plot -> py.offline.plot
+
 ## PlotODETwoByTwo - 2x2 ODE System
 
 This class can be used to solve and plot a 2x2 system of IVP ODEs. An example can be viewed with:
