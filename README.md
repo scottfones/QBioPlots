@@ -40,7 +40,6 @@ a = 0.2         b = 0.6
 
 To solve a 2x2 system, the following parameters are necessary
 ```
-steps, x_start, x_end, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds
 steps   - Number of intervals over your domain
 x_start - First value of your domain
 x_end   - Last value of your domain
