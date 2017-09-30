@@ -212,7 +212,7 @@ class PhasePlaneTwoByTwoWithCarry(object):
         fig = ff.create_streamline(x_coords, y_coords, u, v, 
                                     arrow_scale=( (x_end - x_start)/50 ), 
                                     density=1,
-                                    name='streamline')
+                                    name='Streamline')
 
         p1 = go.Scatter(x=[e1[0]], y=[e1[1]],
                         mode='markers',
