@@ -5,23 +5,34 @@ import plotly.figure_factory as ff
 from scipy.integrate import odeint
 
 class PlotODETwoByTwo (object):
-    'Uses Plot.ly to plot solutions to a 2x2 system of ODEs. The input equations must be written with x1 and x2 as the variables'
-
-    def __init__(self, steps, x_start, x_end, figure_title, x_label,
-                 y_label, x1_label, x2_label, eqn1, eqn2, init_conds = []):
-        """Solves and Plots 2x2 Systems of ODEs
+     """Solves and Plots 2x2 Systems of ODEs
 
            Parameters:  (steps, x_start, x_end, figure_title, x_label, 
                          y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
-                        steps - The number of values on which the ODEs should be evaluated
+                        steps   - Number of intervals over your domain
+                        x_start - First value of your domain
+                        x_end   - Last value of your domain
+                        figure_title - (string) Title for the plot
+                        x_label      - (string) Label for the x-axis
+                        y_label      - (string) Label for the y-axis
+                        x1_label     - (string) Label for the first dependent variable
+                        x2_label     - (string) Label for the second dependent variable
+                        eqn1 - (lambda) First equation of the system
+                        eqn2 - (lambda) Second equation of the system
+                        init_conds - (list) List containing the initial values for x1 and x2
 
-        """
+           Equations must be written as lambda functions with x1 and x2 as the independent variables.
+           They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
+     """
+
+    def __init__(self, steps, x_start, x_end, figure_title, x_label,
+                 y_label, x1_label, x2_label, eqn1, eqn2, init_conds = [])
         
         t = np.linspace(x_start, x_end, steps+1)
 
         def f(init_conds, t):
-            'Function that defines system of equations and takes aninitial condition'
+            'Function that defines system of equations and takes an initial condition'
             x1 = init_conds[0]
             x2 = init_conds[1]
 
@@ -131,6 +142,8 @@ class PlotODETwoByTwo (object):
         init_conds = [1,1]
 
         cls(steps, x_start, x_end, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds)
+
+
 
 
 '''
