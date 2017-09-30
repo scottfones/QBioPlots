@@ -107,7 +107,7 @@ class PlotODETwoByTwo (object):
         )
 
         fig = go.Figure(data=data, layout=layout)
-        py.plotly.plot(fig, filename='2x2 Nonlinear ODEs')
+        py.plotly.plot(fig, filename=figure_title)
 
     @classmethod
     def demo(cls):
@@ -271,7 +271,7 @@ class PhasePlaneTwoByTwoWithCarry(object):
             ),
         )
 
-        py.plotly.plot(fig, filename='2x2 Phase Plane with Carry Capacity')
+        py.plotly.plot(fig, filename=figure_title)
 
     @classmethod
     def demo(cls):
