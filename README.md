@@ -55,7 +55,7 @@ a = 0.2         b = 0.6
 ### Demo Output ###
 ![https://plot.ly/~scottfones/93.svg](/demo_plots/PlotODETwoByTwo.svg)
 
-[Interactive Plot](https://plot.ly/~scottfones/93.embed)
+[**Interactive Plot**](https://plot.ly/~scottfones/93.embed)
 
 ### Usage ###
 
@@ -152,7 +152,7 @@ a = 0.2         b = 0.6
 ### Demo Output ###
 ![https://plot.ly/~scottfones/98.svg](/demo_plots/PhasePlaneTwoByTwoWithCarry.svg)
 
-[Interactive Plot](https://plot.ly/~scottfones/98.embed)
+[**Interactive Plot**](https://plot.ly/~scottfones/98.embed)
 
 ### Usage ###
 
