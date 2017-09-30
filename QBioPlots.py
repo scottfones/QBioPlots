@@ -198,8 +198,8 @@ class PhasePlaneTwoByTwoWithCarry(object):
         e3 = fsolve(findEquilibrium, [ carry1, 0 ]) 
         e4 = fsolve(findEquilibrium, [ 0, 0 ])
 
-        if (x_start == 0) : x_start = 0.1
-        if (y_start == 0) : y_start = 0.1
+        if (x_start == 0) : x_start = 0.01
+        if (y_start == 0) : y_start = 0.01
 
         x_coords = np.linspace(x_start, x_end, x_steps) 
         y_coords = np.linspace(y_start, y_end, y_steps) 
