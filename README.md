@@ -191,13 +191,11 @@ y_end = 100
 y_steps = 200
 
 # y_1
-carry1 = 50
 r_1 = 0.15
 k_1 = 50
 a = 0.2
 
 # y_2 
-carry2 = 60
 r_2 = 0.3
 k_2 = 60
 b = 0.6
@@ -215,6 +213,6 @@ eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
 init_conds = [1,1]
 
 phase(x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
-      x_label, y_label, carry1, carry2, a, b, eqn1, eqn2, init_conds)
+      x_label, y_label, k_1, k_2, a, b, eqn1, eqn2, init_conds)
 ```
 **NOTE**: Equations one and two must defined using `lambda x1, x2: ` before your expression. The lambda functions are required to pass the expressions as parameters.

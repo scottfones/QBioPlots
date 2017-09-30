@@ -284,13 +284,11 @@ class PhasePlaneTwoByTwoWithCarry(object):
         y_steps = 200
 
         # y_1
-        carry1 = 50
         r_1 = 0.15
         k_1 = 50
         a = 0.2
 
         # y_2 
-        carry2 = 60
         r_2 = 0.3
         k_2 = 60
         b = 0.6
@@ -308,4 +306,4 @@ class PhasePlaneTwoByTwoWithCarry(object):
         init_conds = [1,1]
 
         cls(x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
-            x_label, y_label, carry1, carry2, a, b, eqn1, eqn2, init_conds)
+            x_label, y_label, k_1, k_2, a, b, eqn1, eqn2, init_conds)
