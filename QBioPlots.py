@@ -1,38 +1,41 @@
 import numpy as np
-import plotly.plotly as py
+import plotly as py
 import plotly.graph_objs as go
 import plotly.figure_factory as ff
 from scipy.integrate import odeint
+from scipy.optimize import fsolve
 
 class PlotODETwoByTwo (object):
-     """Solves and Plots 2x2 Systems of ODEs
+    """ Designed to solve and plot 2x2 systems of the form:
 
-           Parameters:  (steps, x_start, x_end, figure_title, x_label, 
-                         y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
+            eqn1 = f(x1, x2)
+            eqn2 = g(x1, x2)
 
-                        steps   - Number of intervals over your domain
-                        x_start - First value of your domain
-                        x_end   - Last value of your domain
-                        figure_title - (string) Title for the plot
-                        x_label      - (string) Label for the x-axis
-                        y_label      - (string) Label for the y-axis
-                        x1_label     - (string) Label for the first dependent variable
-                        x2_label     - (string) Label for the second dependent variable
-                        eqn1 - (lambda) First equation of the system
-                        eqn2 - (lambda) Second equation of the system
-                        init_conds - (list) List containing the initial values for x1 and x2
+        Parameters:  (x_start, x_end, steps, figure_title, x_label, 
+                        y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
-           Equations must be written as lambda functions with x1 and x2 as the independent variables.
-           They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
-     """
+                    x_start - First value of your domain
+                    x_end   - Last value of your domain
+                    steps   - Number of intervals over your domain
+                    figure_title - (string) Title for the plot
+                    x_label      - (string) Label for the x-axis
+                    y_label      - (string) Label for the y-axis
+                    x1_label     - (string) Label for the first dependent variable
+                    x2_label     - (string) Label for the second dependent variable
+                    eqn1 - (lambda) First equation of the system
+                    eqn2 - (lambda) Second equation of the system
+                    init_conds - (list) List of  initial values for x1 and x2
 
-    def __init__(self, steps, x_start, x_end, figure_title, x_label,
-                 y_label, x1_label, x2_label, eqn1, eqn2, init_conds = [])
+        Equations must be written as lambda functions with x1 and x2 as the independent variables.
+        They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
+    """
+
+    def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label, 
+                 x1_label, x2_label, eqn1, eqn2, init_conds = []):
         
         t = np.linspace(x_start, x_end, steps+1)
 
         def f(init_conds, t):
-            'Function that defines system of equations and takes an initial condition'
             x1 = init_conds[0]
             x2 = init_conds[1]
 
@@ -42,8 +45,6 @@ class PlotODETwoByTwo (object):
             return [f0, f1]
 
         A = odeint(f, init_conds, t, atol=1.0e-20,rtol=1.0e-13)
-
-        print("{}".format(A))
 
         y1 = A[:,0]
         y2 = A[:,1]
@@ -106,16 +107,16 @@ class PlotODETwoByTwo (object):
         )
 
         fig = go.Figure(data=data, layout=layout)
-        py.plot(fig, filename='2x2 Nonlinear ODEs')
+        py.plotly.plot(fig, filename='2x2 Nonlinear ODEs')
 
     @classmethod
     def demo(cls):
         'Creates instance with predefined variables to serve as an example'
 
         # Solution Parameters
-        steps = 200
         x_start = 0
         x_end = 100
+        steps = 200
 
         # y_1
         r_1 = 0.15
@@ -141,52 +142,174 @@ class PlotODETwoByTwo (object):
         # Initial Conditions
         init_conds = [1,1]
 
-        cls(steps, x_start, x_end, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds)
+        cls(x_start, x_end, steps, figure_title, x_label, y_label, 
+            x1_label, x2_label, eqn1, eqn2, init_conds)
 
 
 
 
-'''
-class PhasePlanePrinter():
-    'Uses Plot.ly to print phase plane diagrams for given input systems.'
+class PhasePlaneTwoByTwoWithCarry(object):
+    """ Designed to solve and plot the phase plane for 2x2 systems
+        of the form:
 
-    def __init__(self, e1, e2, n, xs, xe, ys, ye):
-        # Update parameters
-        eqn1 = e1
-        eqn2 = e2
-        steps = n
-        x_start = xs
-        x_end = xe
-        y_start = ys
-        y_end = ye    
+            eqn1 = r_1*x1 * (k_1 - x1 - a*x_2) / k_1
+            eqn2 = r_2*x2 * (k_2 - b*x1 - x_2) / k_2
 
-        x_vals = np.linspace(x_start, x_end, steps)
-        y_vals = np.linspace(y_start, y_end, steps)
-        y_mesh, x_mesh =  np.meshgrid(x_vals, y_vals)    
+        Parameters:  (x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title,
+                      x_label, y_label, carry1, carry2, a, b, eqn1, eqn2, initial_conds[])
+
+                      x_start - First value for x-axis
+                      x_end   - Last value for x-axis
+                      x_steps - Number of intervals for x-axis
+                      y_start - First value for y-axis
+                      y_end   - Last value for y-axis
+                      y_steps - Number of intervals for y-axis
+                      figure_title - (string) Title for the plot
+                      x_label      - (string) Label for the x-axis
+                      y_label      - (string) Label for the y-axis
+                      carry1 - Carry capacity for the first equation
+                      carry2 - Carry capacity for the second equation
+                      a - Interaction coefficient for the first equation
+                      b - Interaction coefficient for the second equation
+                      eqn1 - (lambda) First equation of the system
+                      eqn2 - (lambda) Second equation of the system
+                      init_conds - (list) List of initial values for x1 and x2
+
+        Equations must be written as lambda functions with x1 and x2 as the independent variables.
+        They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
+
+    """
+
+    def __init__(self, x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
+                 x_label, y_label, carry1, carry2, a, b, eqn1, eqn2, init_conds = []):
+        'Constructor for PhasePlaneTwoByTwoWithCarry'
+
+        def findEquilibrium(x):
+            x1, x2 = x
+
+            f0 = eqn1(x1, x2)
+            f1 = eqn2(x1, x2)
+
+            return np.array([f0, f1], dtype=float)
+
+        e1 = fsolve(findEquilibrium, [ ( (carry1-a*carry2)/(1-a*b) ), 
+                                       ( (carry2-b*carry1)/(1-a*b))])
+        e2 = fsolve(findEquilibrium, [ 0, carry2 ])
+        e3 = fsolve(findEquilibrium, [ carry1, 0 ]) 
+        e4 = fsolve(findEquilibrium, [ 0, 0 ])
+
+        if (x_start == 0) : x_start = 0.1
+        if (y_start == 0) : y_start = 0.1
+
+        x_coords = np.linspace(x_start, x_end, x_steps) 
+        y_coords = np.linspace(y_start, y_end, y_steps) 
+
+        x_mesh, y_mesh = np.meshgrid(x_coords, y_coords)
+
+        u = eqn1(x_mesh, y_mesh)
+        v = eqn2(x_mesh, y_mesh)
+
+        fig = ff.create_streamline(x_coords, y_coords, u, v, 
+                                    arrow_scale=( (x_end - x_start)/50 ), 
+                                    density=1,
+                                    name='streamline')
+
+        p1 = go.Scatter(x=[e1[0]], y=[e1[1]],
+                        mode='markers',
+                        marker=go.Marker(size=14),
+                        name='Equilibrium 1')
+        p2 = go.Scatter(x=[e2[0]], y=[e2[1]],
+                        mode='markers',
+                        marker=go.Marker(size=14),
+                        name='Equilibrium 2')
+        p3 = go.Scatter(x=[e3[0]], y=[e3[1]],
+                        mode='markers',
+                        marker=go.Marker(size=14),
+                        name='Equilibrium 3')
+        p4 = go.Scatter(x=[e4[0]], y=[e4[1]],
+                        mode='markers',
+                        marker=go.Marker(size=14),
+                        name='Equilibrium 4')
         
-        eqn1 = 0.1*x_mesh*(50-x_mesh-0.1*y_mesh)/50
-        eqn2 = 0.3*y_mesh*(60-0.6*x_mesh-y_mesh)/60
+        fig['data'].append(p1)
+        fig['data'].append(p2)
+        fig['data'].append(p3)
+        fig['data'].append(p4)
 
-        print("{}".format(eqn1))
-        print("{}".format(eqn2))
+        fig['layout'] = go.Layout(
+            title = figure_title,
+            autosize = True,
 
-        fig = ff.create_streamline(x_vals, y_vals, eqn1, eqn2, arrow_scale=.1)
-        print("{}".format(fig))
-        py.plot(fig, filename='Streamline Plot Example')
+            font = dict(
+                size = 22,
+            ),
+
+            xaxis = dict(
+                title = x_label,
+                showgrid = False,
+                titlefont=dict(
+                    size=20,
+                ),
+                tickfont=dict(
+                    size=14,
+                ),
+                zerolinewidth=1,
+                ticks = 'outside',
+            ),
+
+            yaxis = dict(
+                title = y_label,
+                showgrid = False,
+                titlefont=dict(
+                    size=20,
+                ),
+                tickfont=dict(
+                    size=14,
+                ),
+                zerolinewidth=1,
+                ticks = 'inside',
+            ),
+        )
+
+        py.plotly.plot(fig, filename='2x2 Phase Plane with Carry Capacity')
 
     @classmethod
-    def demo(self):
-        steps = 10000    
-    
+    def demo(cls):
+        # Solution Parameters
         x_start = 0
         x_end = 100
+        x_steps = 200
         y_start = 0
-        y_end = 50
+        y_end = 100
+        y_steps = 200
 
-        x_vals = np.linspace(x_start, x_end, steps)
-        y_vals = np.linspace(y_start, y_end, steps)
+        # y_1
+        r_1 = 0.15
+        k_1 = 50
+        a = 0.2
 
-        eqn1 = 0.1*x_vals*(50-x_vals-0.1*y_vals)/50
-        eqn2 = 0.3*y_vals*(60-0.6*x_vals-y_vals)/60
-        PhasePlanePrinter(eqn1, eqn2, steps, x_start, x_end, y_start, y_end)
-'''
+        # y_2 
+        r_2 = 0.3
+        k_2 = 60
+        b = 0.6
+
+        # Plot Labels
+        figure_title = "Demo: 2x2 Phase Plane with Carry Capacity"
+        x_label = "population size, N1"
+        y_label = "population size, N2"
+
+        # Equation Parameters
+        carry1 = 50
+        carry2 = 60
+        a = 0.15
+        b = 0.6
+
+        # Equations
+        eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
+        eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
+
+        # Initial Conditions
+        init_conds = [1,1]
+
+        cls(x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
+            x_label, y_label, carry1, carry2, a, b, eqn1, eqn2, init_conds)
