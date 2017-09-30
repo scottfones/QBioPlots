@@ -284,11 +284,13 @@ class PhasePlaneTwoByTwoWithCarry(object):
         y_steps = 200
 
         # y_1
+        carry1 = 50
         r_1 = 0.15
         k_1 = 50
         a = 0.2
 
         # y_2 
+        carry2 = 60
         r_2 = 0.3
         k_2 = 60
         b = 0.6
@@ -296,13 +298,7 @@ class PhasePlaneTwoByTwoWithCarry(object):
         # Plot Labels
         figure_title = "Demo: 2x2 Phase Plane with Carry Capacity"
         x_label = "population size, N1"
-        y_label = "population size, N2"
-
-        # Equation Parameters
-        carry1 = 50
-        carry2 = 60
-        a = 0.15
-        b = 0.6
+        y_label = "population size, N2"       
 
         # Equations
         eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
