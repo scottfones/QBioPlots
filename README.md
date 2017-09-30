@@ -16,12 +16,14 @@ All of the classes assume online plotting, which requires [initialization](https
     - [Demo](https://github.com/scottfones/QBioPlots#demo) 
     - [Demo Model](https://github.com/scottfones/QBioPlots#demo-model)
     - [Demo Parameters](https://github.com/scottfones/QBioPlots#demo-parameters) 
+    - [Demo Output](https://github.com/scottfones/QBioPlots#demo-output)
     - [Usage](https://github.com/scottfones/QBioPlots#usage) 
 - [PhasePlaneTwoByTwoWithCarry](https://github.com/scottfones/QBioPlots#phaseplanetwobytwowithcarry---phase-plane-of-2x2-ode-system-with-carry-capacities)
     - [Overview](https://github.com/scottfones/QBioPlots#overview-1) 
     - [Demo](https://github.com/scottfones/QBioPlots#demo-1) 
-    - [Demo Model](https://github.com/scottfones/QBioPlots#demo-mode-1)
+    - [Demo Model](https://github.com/scottfones/QBioPlots#demo-model-1)
     - [Demo Parameters](https://github.com/scottfones/QBioPlots#demo-parameters-1) 
+    - [Demo Output](https://github.com/scottfones/QBioPlots#demo-output-1)
     - [Usage](https://github.com/scottfones/QBioPlots#usage-1) 
 
 ## PlotODETwoByTwo - 2x2 ODE System
