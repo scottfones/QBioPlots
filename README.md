@@ -55,7 +55,7 @@ a = 0.2         b = 0.6
 ### Demo Output ###
 ![https://plot.ly/~scottfones/93.svg](/demo_plots/PlotODETwoByTwo.svg)
 
-[Interactive Version](https://plot.ly/~scottfones/93.embed)
+[Interactive Plot](https://plot.ly/~scottfones/93.embed)
 
 ### Usage ###
 
@@ -112,6 +112,7 @@ ode22(x_start, x_end, steps, figure_title, x_label, y_label, x1_label, x2_label,
 **NOTE**: Equations one and two must defined using `lambda x1, x2: ` before your expression. The lambda functions are required to pass the expressions as parameters.
 
 
+
 <hr>
 
 
@@ -151,7 +152,7 @@ a = 0.2         b = 0.6
 ### Demo Output ###
 ![https://plot.ly/~scottfones/98.svg](/demo_plots/PhasePlaneTwoByTwoWithCarry.svg)
 
-[Interactive Version](https://plot.ly/~scottfones/98.embed)
+[Interactive Plot](https://plot.ly/~scottfones/98.embed)
 
 ### Usage ###
 
