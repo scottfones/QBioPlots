@@ -286,8 +286,8 @@ class PhasePlaneTwoByTwoWithCarry(object):
 
         # Plot Labels
         figure_title = "Demo: 2x2 Phase Plane with Carry Capacity"
-        x_label = "population size, N1"
-        y_label = "population size, N2"       
+        x_label = "$N_1$"
+        y_label = "$N_2$"       
 
         # Equations
         eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
