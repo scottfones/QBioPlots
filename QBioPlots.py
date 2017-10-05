@@ -201,7 +201,7 @@ class PhasePlaneTwoByTwoWithCarry(object):
         v = eqn2(x_mesh, y_mesh)
 
         fig = ff.create_streamline(x_coords, y_coords, u, v, 
-                                    arrow_scale=( (x_end - x_start)/70 ), 
+                                    arrow_scale=( (x_end - x_start)/60 ), 
                                     density=1.1,
                                     name='Streamline')
 
