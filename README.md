@@ -175,7 +175,6 @@ a - Interaction coefficient for the first equation
 b - Interaction coefficient for the second equation
 eqn1 - (lambda) First equation of the system
 eqn2 - (lambda) Second equation of the system
-init_conds - (list) List of initial values for x1 and x2
 ```
 
 Example:
@@ -209,10 +208,7 @@ y_label = "population size, N2"
 eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
 eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
 
-# Initial Conditions
-init_conds = [1,1]
-
 phase(x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
-      x_label, y_label, k_1, k_2, a, b, eqn1, eqn2, init_conds)
+      x_label, y_label, k_1, k_2, a, b, eqn1, eqn2)
 ```
 **NOTE**: Equations one and two must defined using `lambda x1, x2: ` before your expression. The lambda functions are required to pass the expressions as parameters.

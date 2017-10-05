@@ -173,30 +173,21 @@ class PhasePlaneTwoByTwoWithCarry(object):
                       b - Interaction coefficient for the second equation
                       eqn1 - (lambda) First equation of the system
                       eqn2 - (lambda) Second equation of the system
-                      init_conds - (list) List of initial values for x1 and x2
-
+                      
         Equations must be written as lambda functions with x1 and x2 as the independent variables.
         They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
 
     """
 
     def __init__(self, x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
-                 x_label, y_label, carry1, carry2, a, b, eqn1, eqn2, init_conds = []):
+                 x_label, y_label, carry1, carry2, a, b, eqn1, eqn2):
         'Constructor for PhasePlaneTwoByTwoWithCarry'
 
-        def findEquilibrium(x):
-            x1, x2 = x
-
-            f0 = eqn1(x1, x2)
-            f1 = eqn2(x1, x2)
-
-            return np.array([f0, f1], dtype=float)
-
-        e1 = fsolve(findEquilibrium, [ ( (carry1-a*carry2)/(1-a*b) ), 
-                                       ( (carry2-b*carry1)/(1-a*b))])
-        e2 = fsolve(findEquilibrium, [ 0, carry2 ])
-        e3 = fsolve(findEquilibrium, [ carry1, 0 ]) 
-        e4 = fsolve(findEquilibrium, [ 0, 0 ])
+        e1 = [ ( (carry1-a*carry2)/(1-a*b) ), 
+               ( (carry2-b*carry1)/(1-a*b) ) ]
+        e2 = [ 0, carry2 ]
+        e3 = [ carry1, 0 ] 
+        e4 = [ 0, 0 ]
 
         if (x_start == 0) : x_start = 0.01
         if (y_start == 0) : y_start = 0.01
@@ -302,8 +293,5 @@ class PhasePlaneTwoByTwoWithCarry(object):
         eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
         eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
 
-        # Initial Conditions
-        init_conds = [1,1]
-
         cls(x_start, x_end, x_steps, y_start, y_end, y_steps, figure_title, 
-            x_label, y_label, k_1, k_2, a, b, eqn1, eqn2, init_conds)
+            x_label, y_label, k_1, k_2, a, b, eqn1, eqn2)
