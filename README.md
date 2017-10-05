@@ -152,7 +152,7 @@ k_1 = 50        k_2 = 60
 a = 0.2         b = 0.6
 ```
 ### Demo Output ###
-![https://plot.ly/~scottfones/98.svg](/demo_plots/PhasePlaneTwoByTwoWithCarry.svg)
+![https://plot.ly/~scottfones/98.svg](/demo_plots/PhasePlaneTwoByTwoWithCarry.webp)
 
 [**Interactive Plot**](https://plot.ly/~scottfones/98.embed)
 
