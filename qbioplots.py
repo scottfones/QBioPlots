@@ -5,29 +5,35 @@ import plotly.figure_factory as ff
 from scipy.integrate import odeint
 from scipy.optimize import fsolve
 
-class PlotODETwoByTwo (object):
-    """ Designed to solve and plot 2x2 systems of the form:
+class Plot2D(object):
+    """
+    H
+    """
 
-            eqn1 = f(x1, x2)
-            eqn2 = g(x1, x2)
+class PlotODETwoByTwo(object):
+    """ 
+    Designed to solve and plot 2x2 systems of the form:
 
-        Parameters:  (x_start, x_end, steps, figure_title, x_label, 
-                        y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
+        eqn1 = f(x1, x2)
+        eqn2 = g(x1, x2)
 
-                    x_start - First value of your domain
-                    x_end   - Last value of your domain
-                    steps   - Number of intervals over your domain
-                    figure_title - (string) Title for the plot
-                    x_label      - (string) Label for the x-axis
-                    y_label      - (string) Label for the y-axis
-                    x1_label     - (string) Label for the first dependent variable
-                    x2_label     - (string) Label for the second dependent variable
-                    eqn1 - (lambda) First equation of the system
-                    eqn2 - (lambda) Second equation of the system
-                    init_conds - (list) List of  initial values for x1 and x2
+    Parameters:  (x_start, x_end, steps, figure_title, x_label, 
+                    y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
-        Equations must be written as lambda functions with x1 and x2 as the independent variables.
-        They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
+                x_start - First value of your domain
+                x_end   - Last value of your domain
+                steps   - Number of intervals over your domain
+                figure_title - (string) Title for the plot
+                x_label      - (string) Label for the x-axis
+                y_label      - (string) Label for the y-axis
+                x1_label     - (string) Label for the first dependent variable
+                x2_label     - (string) Label for the second dependent variable
+                eqn1 - (lambda) First equation of the system
+                eqn2 - (lambda) Second equation of the system
+                init_conds - (list) List of  initial values for x1 and x2
+
+    Equations must be written as lambda functions with x1 and x2 as the independent variables.
+    They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
     """
 
     def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label, 
