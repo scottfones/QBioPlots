@@ -35,7 +35,7 @@ This class can be used to solve and plot a 2x2 system of IVP ODEs.
 An example can be viewed with:
 
 ```
-from QBioPlots import PlotODETwoByTwo as ode22
+from qbioplots import PlotODETwoByTwo as ode22
 
 ode22.demo()
 ```
@@ -78,7 +78,7 @@ init_conds - (list) List containing the initial values for x1 and x2
 
 Example:
 ```
-from QBioPlots import PlotODETwoByTwo as ode22
+from qbioplots import PlotODETwoByTwo as ode22
 
 # Solution Parameters
 x_start = 0
@@ -132,7 +132,7 @@ This class can be used to plot the phase plane of a 2x2 ODE system with carry ca
 An example can be viewed with:
 
 ```
-from QBioPlots import PhasePlaneTwoByTwoWithCarry as phase
+from qbioplots import PhasePlaneTwoByTwoWithCarry as phase
 
 phase.demo()
 ```
@@ -179,7 +179,7 @@ eqn2 - (lambda) Second equation of the system
 
 Example:
 ```
-from QBioPlots import PhasePlaneTwoByTwoWithCarry as phase
+from qbioplots import PhasePlaneTwoByTwoWithCarry as phase
 
 # Solution Parameters
 x_start = 0
