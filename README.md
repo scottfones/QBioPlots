@@ -37,10 +37,10 @@ An example can be viewed with:
 ```
 from qbioplots import PlotSystemWRTTime as ode22
 
-ode22.demo()
+ode22.demo1()
 ```
 
-The example solves a competition model with the following parameters:
+This example solves and plots a competition model. An additional demo can be seen with `ode22.demo2()` that plots the seven equation system (Model A) defined by [Dunster et al. (2015)](journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004589) 
 
 ### Demo Model ###
 
