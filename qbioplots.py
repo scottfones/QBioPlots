@@ -91,7 +91,8 @@ class PlotSystemWRTTime(object):
             legend = dict(
                 x = 1,
                 y = 1,
-                bordercolor = '#303030',
+                bordercolor = '#404040',
+                bgcolor = "rgba(255, 255, 255, 0.5)", 
                 borderwidth = 1,
                 font = dict(
                     size = 16

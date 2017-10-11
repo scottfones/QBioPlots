@@ -55,9 +55,9 @@ k_1 = 50        k_2 = 60
 a = 0.2         b = 0.6
 ```
 ### Demo Output ###
-![https://plot.ly/~scottfones/93.svg](/demo_plots/PlotODETwoByTwo.svg)
+![https://plot.ly/~scottfones/334.svg](/demo_plots/PlotODETwoByTwo.webp)
 
-[**Interactive Plot**](https://plot.ly/~scottfones/93.embed)
+[**Interactive Plot**](https://plot.ly/~scottfones/334.embed)
 
 ### Usage ###
 
