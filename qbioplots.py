@@ -36,9 +36,9 @@ class PlotSystemWRTTime(object):
     def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label, 
                  var_labels = [], eqn_list = [], init_conds = []):
 
+        # Check List Parameter Lengths
         if ( len(eqn_list) != len(init_conds) ):
             raise ValueError("Number of equations does not equal number of initial conditions. Equations: {}, Conditions: {}".format(len(eqn_list), len(init_conds)) )
-       
         elif ( len(var_labels) != len(init_conds) ):
             raise ValueError("Number of variable labels does not equal number of initial conditions. Labels: {}, Conditions: {}".format(len(var_labels), len(init_conds)) )
         
@@ -52,8 +52,10 @@ class PlotSystemWRTTime(object):
         # ODE Solutions (Pandas Dataframe)
         pd_solutions = pd.DataFrame( odeint(f, init_conds, t, atol=1.0e-20,rtol=1.0e-13), columns=var_labels)
 
+        # Data Structures 
         data = [go.Scatter(x = t, y = pd_solutions[label], mode = 'lines', name = label, line = dict(width=5)) for label in var_labels ]
 
+        # Figure Layout
         layout = go.Layout(
             title = figure_title,
             autosize = True,
@@ -102,6 +104,7 @@ class PlotSystemWRTTime(object):
             ),
         )
 
+        # Create Figure and Plot
         fig = go.Figure(data=data, layout=layout)
         py.plotly.plot(fig, filename=figure_title)
 
