@@ -11,7 +11,7 @@ All of the classes assume online plotting, which requires [initialization](https
 
 ## Classes ##
 
-- [PlotODETwoByTwo](https://github.com/scottfones/QBioPlots#plotodetwobytwo---2x2-ode-system)
+- [PlotSystemWRTTime](https://github.com/scottfones/QBioPlots#plotodetwobytwo---2x2-ode-system)
     - [Overview](https://github.com/scottfones/QBioPlots#overview) 
     - [Demo](https://github.com/scottfones/QBioPlots#demo) 
     - [Demo Model](https://github.com/scottfones/QBioPlots#demo-model)
@@ -26,16 +26,16 @@ All of the classes assume online plotting, which requires [initialization](https
     - [Demo Output](https://github.com/scottfones/QBioPlots#demo-output-1)
     - [Usage](https://github.com/scottfones/QBioPlots#usage-1) 
 
-## PlotODETwoByTwo - 2x2 ODE System
+## PlotSystemWRTTime - Plot ODE System WRT Time
 
 ### Overview ###
-This class can be used to solve and plot a 2x2 system of IVP ODEs. 
+This class can be used to solve and plot a NxN system of IVP ODEs, with N <= 10. 
 
 ### Demo ###
 An example can be viewed with:
 
 ```
-from qbioplots import PlotODETwoByTwo as ode22
+from qbioplots import PlotSystemWRTTime as ode22
 
 ode22.demo()
 ```
@@ -61,24 +61,22 @@ a = 0.2         b = 0.6
 
 ### Usage ###
 
-To solve a 2x2 system, the following parameters are necessary
+To solve an ode system, the following parameters are necessary
 ```
-x_start - First value of your domain
-x_end   - Last value of your domain
-steps   - Number of intervals over your domain
+x_start - (int) First value of your domain
+x_end   - (int) Last value of your domain
+steps   - (int) Number of intervals over your domain
 figure_title - (string) Title for the plot
 x_label      - (string) Label for the x-axis
 y_label      - (string) Label for the y-axis
-x1_label     - (string) Label for the first dependent variable
-x2_label     - (string) Label for the second dependent variable
-eqn1 - (lambda) First equation of the system
-eqn2 - (lambda) Second equation of the system
-init_conds - (list) List containing the initial values for x1 and x2
+var_labels - (list) List of dependent variable labels
+eqn_list   - (list) List of equations
+init_conds - (list) List of initial values
 ```
 
 Example:
 ```
-from qbioplots import PlotODETwoByTwo as ode22
+from qbioplots import PlotSystemWRTTime as ode22
 
 # Solution Parameters
 x_start = 0
@@ -99,17 +97,17 @@ b = 0.6
 figure_title = "2x2 Nonlinear ODE System"
 x_label = "time (days)"
 y_label = "population"
-x1_label = "Population 1"
-x2_label = "Population 2"
+var_labels = ["Population 1", "Population 2"]
 
 # Equations
 eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
 eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
+eqn_list = [eqn1, eqn2]
 
 # Initial Conditions
 init_conds = [1,1]
 
-ode22(x_start, x_end, steps, figure_title, x_label, y_label, x1_label, x2_label, eqn1, eqn2, init_conds)
+ode22(x_start, x_end, steps, figure_title, x_label, y_label, var_labels, eqn_list, init_conds)
 ```
 **NOTE**: Equations one and two must defined using `lambda x1, x2: ` before your expression. The lambda functions are required to pass the expressions as parameters.
 
