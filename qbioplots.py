@@ -102,7 +102,7 @@ class PlotSystemWRTTime(object):
         )
 
         fig = go.Figure(data=data, layout=layout)
-        py.offline.plot(fig, filename=figure_title)
+        py.plotly.plot(fig, filename=figure_title)
 
     @classmethod
     def demo1(cls):
