@@ -87,13 +87,25 @@ class PlotSystemWRTTime(object):
                 zerolinewidth=1,
                 ticks = 'inside',
             ),
+
+            legend = dict(
+                x = 1,
+                y = 1,
+                bordercolor = '#303030',
+                borderwidth = 1,
+                font = dict(
+                    size = 16
+                ),
+                xanchor = 'right',
+                yanchor = 'top',
+            ),
         )
 
         fig = go.Figure(data=data, layout=layout)
         py.offline.plot(fig, filename=figure_title)
 
     @classmethod
-    def demo(cls):
+    def demo1(cls):
         'Creates instance with predefined variables to serve as an example'
 
         # Solution Parameters
@@ -124,6 +136,63 @@ class PlotSystemWRTTime(object):
 
         # Initial Conditions
         init_conds = [1,1]
+
+        cls(x_start, x_end, steps, figure_title, x_label, y_label, 
+            var_labels, eqn_list, init_conds)
+    
+    @classmethod
+    def demo2(cls):
+        'Demo plot using equations and parameters from Dunster et al. (2015)'
+
+        # Constants
+        k_1 = 8
+        k_m1 = 3.02e-2
+        V_e = 3.3e-9
+        V_p = 7.4e-18
+        A_v = 6.0221409e23
+        k_2 = 3.02e-2
+        k_3 = 9.55e5
+        rho_1 = 5.13e-1
+        gamma_1 = 3.53
+
+        # Define Initial Conditions
+        L_0 = 3e-2
+        g_0 = 5000
+        s_0 = 2763
+        G_0 = 0
+        G_p_0 = 0
+        G_b0_0 = 0
+        G_b1_0 = 0
+        init_conds = [g_0, G_0, G_p_0, G_b0_0, G_b1_0, L_0, s_0]
+
+        # Domain 
+        x_start = 0
+        x_end = 250
+        steps = 2500
+
+        # Equations
+        f0 = lambda x1,x2,x3,x4,x5,x6,x7: -1 * k_1 * x1 * x6 + k_m1 * x2   # dg / dt
+        f1 = lambda x1,x2,x3,x4,x5,x6,x7: k_1 * x1 * x6 - k_m1 * x2 - k_2 * x2   # dG / dt
+        f2 = lambda x1,x2,x3,x4,x5,x6,x7: k_2 * x2 - ( k_3 / ( V_p * A_v )) * x3 * x7   # dG_p / dt 
+        f3 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_3 / ( V_p * A_v )) * x3 * x7 - rho_1 * x4 + gamma_1 * x5  # dG_b0 / dt
+        f4 = lambda x1,x2,x3,x4,x5,x6,x7: rho_1 * x4 - gamma_1 * x5   # dG_b1 / dt
+        f5 = lambda x1,x2,x3,x4,x5,x6,x7: -1 * ( k_1 / ( V_e * A_v )) * x1 * x6 + ( k_m1 / ( V_e * A_v )) * x2   # dL / dt
+        f6 = lambda x1,x2,x3,x4,x5,x6,x7: -1 * ( k_3 / ( V_p * A_v )) * x7 * x3   # ds/dt
+        eqn_list = [f0, f1, f2, f3, f4, f5, f6] 
+
+        # Figure Title and Labels
+        figure_title = "Demo: Model A, Dunster et al. (2015)"
+        x_label = "time (seconds)"
+        y_label = "molecules"
+        var_labels = [
+            "GPVI",
+            "Ligand-GPVI Complex",
+            "Phosphorylated Receptor",
+            "Bound Syk",
+            "Phosphorylated Syk",
+            "Ligand",
+            "Cytosolic Syk"
+        ]
 
         cls(x_start, x_end, steps, figure_title, x_label, y_label, 
             var_labels, eqn_list, init_conds)
