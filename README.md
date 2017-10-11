@@ -11,7 +11,7 @@ All of the classes assume online plotting, which requires [initialization](https
 
 ## Classes ##
 
-- [PlotSystemWRTTime](https://github.com/scottfones/QBioPlots#plotodetwobytwo---2x2-ode-system)
+- [PlotSystemWRTTime](https://github.com/scottfones/QBioPlots#plotsystemwrttime---plot-ode-system-wrt-time)
     - [Overview](https://github.com/scottfones/QBioPlots#overview) 
     - [Demo](https://github.com/scottfones/QBioPlots#demo) 
     - [Demo Model](https://github.com/scottfones/QBioPlots#demo-model)
