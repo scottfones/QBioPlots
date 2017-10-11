@@ -1,81 +1,58 @@
 import numpy as np
 import plotly as py
+import pandas as pd
 import plotly.graph_objs as go
 import plotly.figure_factory as ff
 from scipy.integrate import odeint
-from scipy.optimize import fsolve
 
-class Plot2D(object):
-    """
-    H
-    """
 
-class PlotODETwoByTwo(object):
+class PlotSystemWRTTime(object):
     """ 
     Designed to solve and plot 2x2 systems of the form:
 
-        eqn1 = f(x1, x2)
-        eqn2 = g(x1, x2)
+        eqn_1' = f_1(x1, ..., x_n)
+        ...
+        eqn_n' = f_n(x1, ..., x_n)
+
+        where n <= 10.
 
     Parameters:  (x_start, x_end, steps, figure_title, x_label, 
                     y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
-                x_start - First value of your domain
-                x_end   - Last value of your domain
-                steps   - Number of intervals over your domain
+                x_start - (int) First value of your domain
+                x_end   - (int) Last value of your domain
+                steps   - (int) Number of intervals over your domain
                 figure_title - (string) Title for the plot
                 x_label      - (string) Label for the x-axis
                 y_label      - (string) Label for the y-axis
-                x1_label     - (string) Label for the first dependent variable
-                x2_label     - (string) Label for the second dependent variable
-                eqn1 - (lambda) First equation of the system
-                eqn2 - (lambda) Second equation of the system
-                init_conds - (list) List of  initial values for x1 and x2
+                var_labels - (list) List of dependent variable labels
+                eqn_list   - (list) List of equations
+                init_conds - (list) List of initial values
 
     Equations must be written as lambda functions with x1 and x2 as the independent variables.
     They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
     """
 
     def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label, 
-                 x1_label, x2_label, eqn1, eqn2, init_conds = []):
+                 var_labels = [], eqn_list = [], init_conds = []):
+
+        if ( len(eqn_list) != len(init_conds) ):
+            raise ValueError("Number of equations does not equal number of initial conditions. Equations: {}, Conditions: {}".format(len(eqn_list), len(init_conds)) )
+       
+        elif ( len(var_labels) != len(init_conds) ):
+            raise ValueError("Number of variable labels does not equal number of initial conditions. Labels: {}, Conditions: {}".format(len(var_labels), len(init_conds)) )
         
+        # Define Domain
         t = np.linspace(x_start, x_end, steps+1)
 
+        # ODE Function
         def f(init_conds, t):
-            x1 = init_conds[0]
-            x2 = init_conds[1]
+            return [eqn(*init_conds) for eqn in eqn_list]
 
-            f0 = eqn1(x1,x2)
-            f1 = eqn2(x1,x2)
+        # ODE Solutions (Pandas Dataframe)
+        pd_solutions = pd.DataFrame( odeint(f, init_conds, t, atol=1.0e-20,rtol=1.0e-13), columns=var_labels)
 
-            return [f0, f1]
-
-        A = odeint(f, init_conds, t, atol=1.0e-20,rtol=1.0e-13)
-
-        y1 = A[:,0]
-        y2 = A[:,1]
-
-        trace0 = go.Scatter(
-            x = t,
-            y = y1,
-            mode = 'lines',
-            name = x1_label,
-            line = dict(
-                width = 5
-            )
-        )
-
-        trace1 = go.Scatter(
-            x = t,
-            y = y2,
-            mode = 'lines',
-            name = x2_label,
-            line = dict(
-                width = 5
-            )   
-        )
-
-        data = [trace0, trace1]
+        data = [go.Scatter(x = t, y = pd_solutions[label], mode = 'lines', name = label, line = dict(width=5)) for label in var_labels ]
 
         layout = go.Layout(
             title = figure_title,
@@ -113,7 +90,7 @@ class PlotODETwoByTwo(object):
         )
 
         fig = go.Figure(data=data, layout=layout)
-        py.plotly.plot(fig, filename=figure_title)
+        py.offline.plot(fig, filename=figure_title)
 
     @classmethod
     def demo(cls):
@@ -138,18 +115,18 @@ class PlotODETwoByTwo(object):
         figure_title = "Demo: 2x2 Nonlinear ODE System"
         x_label = "time (days)"
         y_label = "population"
-        x1_label = "Population 1"
-        x2_label = "Population 2"
+        var_labels = ["Population 1", "Population 2"]
 
         # Equations
         eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
         eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
+        eqn_list = [eqn1, eqn2]
 
         # Initial Conditions
         init_conds = [1,1]
 
         cls(x_start, x_end, steps, figure_title, x_label, y_label, 
-            x1_label, x2_label, eqn1, eqn2, init_conds)
+            var_labels, eqn_list, init_conds)
 
 
 
@@ -198,7 +175,7 @@ class PhasePlaneTwoByTwoWithCarry(object):
         if (x_start == 0) : x_start = 0.01
         if (y_start == 0) : y_start = 0.01
 
-        x_coords = np.linspace(x_start, x_end, x_steps) 
+        x_coords = np.linspace(x_star, x_end, x_steps)
         y_coords = np.linspace(y_start, y_end, y_steps) 
 
         x_mesh, y_mesh = np.meshgrid(x_coords, y_coords)
