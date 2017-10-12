@@ -1,6 +1,6 @@
 """
-This module contains classes designed to automate repetitive 
-quantitative biology tasks. 
+This module contains classes designed to automate repetitive
+quantitative biology tasks.
 
 Classes:
     PlotSystemWRTTime: Plots 1 to 10 ODEs wrt time
