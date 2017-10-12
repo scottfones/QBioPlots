@@ -1,3 +1,17 @@
+"""
+This module contains classes designed to automate repetitive 
+quantitative biology tasks. 
+
+Classes:
+    PlotSystemWRTTime: Plots 1 to 10 ODEs wrt time
+    PhasePlaneTwoByTwoWithCarry: Plots a 2D phase plane
+
+Todo:
+    * Forward Euler
+    * Break out constructors into discrete methods
+"""
+
+
 import numpy as np
 import plotly as py
 import pandas as pd
@@ -8,13 +22,13 @@ from scipy.integrate import odeint
 
 class PlotSystemWRTTime(object):
     """ 
-    Designed to solve and plot 2x2 systems of the form:
+    Designed to solve and plot NxN systems of the form:
 
-        eqn_1' = f_1(x1, ..., x_n)
+        eqn_1' = f_1(x1, ..., x_N)
         ...
-        eqn_n' = f_n(x1, ..., x_n)
+        eqn_N' = f_N(x1, ..., x_N)
 
-        where n <= 10.
+        where N <= 10.
 
     Parameters:  (x_start, x_end, steps, figure_title, x_label, 
                     y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
@@ -29,18 +43,22 @@ class PlotSystemWRTTime(object):
                 eqn_list   - (list) List of equations
                 init_conds - (list) List of initial values
 
-    Equations must be written as lambda functions with x1 and x2 as the independent variables.
+    ODEs must be defined as lambda functions with x1,...,x_n as the variables.
     They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
     """
 
     def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label, 
                  var_labels = [], eqn_list = [], init_conds = []):
 
-        # Check List Parameter Lengths
+        # Parameter Check - List Lengths Should Agree
         if ( len(eqn_list) != len(init_conds) ):
-            raise ValueError("Number of equations does not equal number of initial conditions. Equations: {}, Conditions: {}".format(len(eqn_list), len(init_conds)) )
+            raise ValueError("Number of equations does not equal number of \
+                              initial conditions. Equations: {}, Conditions: \
+                              {}".format(len(eqn_list), len(init_conds)) )
         elif ( len(var_labels) != len(init_conds) ):
-            raise ValueError("Number of variable labels does not equal number of initial conditions. Labels: {}, Conditions: {}".format(len(var_labels), len(init_conds)) )
+            raise ValueError("Number of variable labels does not equal number \
+                              of initial conditions. Labels: {}, Conditions: \
+                              {}".format(len(var_labels), len(init_conds)) )
         
         # Define Domain
         t = np.linspace(x_start, x_end, steps+1)
@@ -50,10 +68,16 @@ class PlotSystemWRTTime(object):
             return [eqn(*init_conds) for eqn in eqn_list]
 
         # ODE Solutions (Pandas Dataframe)
-        pd_solutions = pd.DataFrame( odeint(f, init_conds, t, atol=1.0e-20,rtol=1.0e-13), columns=var_labels)
+        pd_solutions = pd.DataFrame( odeint( f, 
+                                             init_conds, 
+                                             t,
+                                             atol=1.0e-20,
+                                             rtol=1.0e-13), 
+                                      columns=var_labels)
 
         # Data Structures 
-        data = [go.Scatter(x = t, y = pd_solutions[label], mode = 'lines', name = label, line = dict(width=5)) for label in var_labels ]
+        data = [go.Scatter(x = t, y = pd_solutions[label], mode = 'lines', 
+                name = label, line = dict(width=5)) for label in var_labels]
 
         # Figure Layout
         layout = go.Layout(
@@ -175,13 +199,27 @@ class PlotSystemWRTTime(object):
         steps = 2500
 
         # Equations
-        f0 = lambda x1,x2,x3,x4,x5,x6,x7: -1 * k_1 * x1 * x6 + k_m1 * x2   # dg / dt
-        f1 = lambda x1,x2,x3,x4,x5,x6,x7: k_1 * x1 * x6 - k_m1 * x2 - k_2 * x2   # dG / dt
-        f2 = lambda x1,x2,x3,x4,x5,x6,x7: k_2 * x2 - ( k_3 / ( V_p * A_v )) * x3 * x7   # dG_p / dt 
-        f3 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_3 / ( V_p * A_v )) * x3 * x7 - rho_1 * x4 + gamma_1 * x5  # dG_b0 / dt
-        f4 = lambda x1,x2,x3,x4,x5,x6,x7: rho_1 * x4 - gamma_1 * x5   # dG_b1 / dt
-        f5 = lambda x1,x2,x3,x4,x5,x6,x7: -1 * ( k_1 / ( V_e * A_v )) * x1 * x6 + ( k_m1 / ( V_e * A_v )) * x2   # dL / dt
-        f6 = lambda x1,x2,x3,x4,x5,x6,x7: -1 * ( k_3 / ( V_p * A_v )) * x7 * x3   # ds/dt
+        # dg / dt
+        f0 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_1 * x1 * x6 
+                                            + k_m1 * x2 ) 
+        # dG / dt
+        f1 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_1 * x1 * x6 - k_m1 * x2 
+                                            - k_2 * x2 ) 
+        # dG_p / dt
+        f2 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_2 * x2 - k_3 / ( V_p * A_v ) 
+                                            * x3 * x7 )  
+        # dG_b0 / dt                                    
+        f3 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_3 / ( V_p * A_v ) * x3 * x7 
+                                            - rho_1 * x4 + gamma_1 * x5 ) 
+        # dG_b1 / dt                                    
+        f4 = lambda x1,x2,x3,x4,x5,x6,x7: rho_1 * x4 - gamma_1 * x5
+        # dL / dt
+        f5 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_1 / ( V_e * A_v ) * x1 
+                                            * x6 + k_m1 / ( V_e * A_v ) * x2 )
+        # ds / dt
+        f6 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_3 / ( V_p * A_v )
+                                            * x7 * x3 )
+        
         eqn_list = [f0, f1, f2, f3, f4, f5, f6] 
 
         # Figure Title and Labels
@@ -230,7 +268,7 @@ class PhasePlaneTwoByTwoWithCarry(object):
                       eqn1 - (lambda) First equation of the system
                       eqn2 - (lambda) Second equation of the system
                       
-        Equations must be written as lambda functions with x1 and x2 as the independent variables.
+        ODEs must be written as lambda functions with x1,...,x_n as the variables.
         They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
 
     """
