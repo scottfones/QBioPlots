@@ -3,8 +3,8 @@ This module contains classes designed to automate repetitive
 quantitative biology tasks.
 
 Classes:
-    PlotSystemWRTTime: Plots 1 to 10 ODEs wrt time
-    PhasePlaneTwoByTwoWithCarry: Plots a 2D phase plane
+    * PlotSystemWRTTime: Plots 1 to 10 ODEs wrt time
+    * PhasePlaneTwoByTwoWithCarry: Plots a 2D phase plane
 
 Todo:
     * Forward Euler
@@ -31,7 +31,7 @@ class PlotSystemWRTTime(object):
         where N <= 10.
 
     Parameters:  (x_start, x_end, steps, figure_title, x_label,
-                    y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
+                  y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
                 x_start - (int) First value of your domain
                 x_end   - (int) Last value of your domain
