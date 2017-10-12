@@ -203,21 +203,21 @@ class PlotSystemWRTTime(object):
 
         # Equations
         # dg / dt
-        f0 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_1 * x1 * x6 
-                                            + k_m1 * x2 ) 
+        f0 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_1 * x1 * x6
+                                            + k_m1 * x2 )
         # dG / dt
-        f1 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_1 * x1 * x6 - k_m1 * x2 
-                                            - k_2 * x2 ) 
+        f1 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_1 * x1 * x6 - k_m1 * x2
+                                            - k_2 * x2 )
         # dG_p / dt
-        f2 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_2 * x2 - k_3 / ( V_p * A_v ) 
-                                            * x3 * x7 )  
-        # dG_b0 / dt                                    
-        f3 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_3 / ( V_p * A_v ) * x3 * x7 
-                                            - rho_1 * x4 + gamma_1 * x5 ) 
+        f2 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_2 * x2 - k_3 / ( V_p * A_v )
+                                            * x3 * x7 )
+        # dG_b0 / dt
+        f3 = lambda x1,x2,x3,x4,x5,x6,x7: ( k_3 / ( V_p * A_v ) * x3 * x7
+                                            - rho_1 * x4 + gamma_1 * x5 )
         # dG_b1 / dt                                    
         f4 = lambda x1,x2,x3,x4,x5,x6,x7: rho_1 * x4 - gamma_1 * x5
         # dL / dt
-        f5 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_1 / ( V_e * A_v ) * x1 
+        f5 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_1 / ( V_e * A_v ) * x1
                                             * x6 + k_m1 / ( V_e * A_v ) * x2 )
         # ds / dt
         f6 = lambda x1,x2,x3,x4,x5,x6,x7: ( -1 * k_3 / ( V_p * A_v )
