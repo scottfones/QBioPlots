@@ -29,7 +29,7 @@ All of the classes assume online plotting, which requires [initialization](https
 ## PlotSystemWRTTime - Plot ODE System WRT Time
 
 ### Overview ###
-This class can be used to solve and plot a NxN system of IVP ODEs, with N <= 10. 
+This class can be used to solve and plot a NxN system of IVP ODEs 
 
 ### Demo ###
 An example can be viewed with:
