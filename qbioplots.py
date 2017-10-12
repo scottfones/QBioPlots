@@ -21,7 +21,7 @@ from scipy.integrate import odeint
 
 
 class PlotSystemWRTTime(object):
-    """ 
+    """
     Designed to solve and plot NxN systems of the form:
 
         eqn_1' = f_1(x1, ..., x_N)
@@ -30,7 +30,7 @@ class PlotSystemWRTTime(object):
 
         where N <= 10.
 
-    Parameters:  (x_start, x_end, steps, figure_title, x_label, 
+    Parameters:  (x_start, x_end, steps, figure_title, x_label,
                     y_label, x1_label, x2_label, eqn1, eqn2, initial_conds[])
 
                 x_start - (int) First value of your domain
@@ -47,19 +47,20 @@ class PlotSystemWRTTime(object):
     They should be of the form \"eqn1 = lambda x1,x2: f(x1,x2)\"
     """
 
-    def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label, 
-                 var_labels = [], eqn_list = [], init_conds = []):
+    def __init__(self, x_start, x_end, steps, figure_title, x_label, y_label,
+                 var_labels=[], eqn_list=[], init_conds=[]):
 
         # Parameter Check - List Lengths Should Agree
-        if ( len(eqn_list) != len(init_conds) ):
-            raise ValueError("Number of equations does not equal number of \
-                              initial conditions. Equations: {}, Conditions: \
-                              {}".format(len(eqn_list), len(init_conds)) )
-        elif ( len(var_labels) != len(init_conds) ):
-            raise ValueError("Number of variable labels does not equal number \
-                              of initial conditions. Labels: {}, Conditions: \
-                              {}".format(len(var_labels), len(init_conds)) )
-        
+        if  len(eqn_list) != len(init_conds):
+            raise ValueError( "Number of equations does not equal number of \
+                               initial conditions. Equations: {}, Conditions: \
+                               {}".format(len(eqn_list), len(init_conds)) )
+
+        elif len(var_labels) != len(init_conds):
+            raise ValueError( "Number of variable labels does not equal number \
+                               of initial conditions. Labels: {}, Conditions: \
+                               {}".format(len(var_labels), len(init_conds)) )
+
         # Define Domain
         t = np.linspace(x_start, x_end, steps+1)
 
@@ -68,29 +69,33 @@ class PlotSystemWRTTime(object):
             return [eqn(*init_conds) for eqn in eqn_list]
 
         # ODE Solutions (Pandas Dataframe)
-        pd_solutions = pd.DataFrame( odeint( f, 
-                                             init_conds, 
+        pd_solutions = pd.DataFrame( odeint( f,
+                                             init_conds,
                                              t,
                                              atol=1.0e-20,
-                                             rtol=1.0e-13), 
-                                      columns=var_labels)
+                                             rtol=1.0e-13),
+                                     columns=var_labels)
 
-        # Data Structures 
-        data = [go.Scatter(x = t, y = pd_solutions[label], mode = 'lines', 
-                name = label, line = dict(width=5)) for label in var_labels]
+        # Data Structures
+        data = [go.Scatter(x=t,
+                           y=pd_solutions[label],
+                           mode='lines',
+                           name=label,
+                           line=dict(width=5))
+                for label in var_labels]
 
         # Figure Layout
         layout = go.Layout(
-            title = figure_title,
-            autosize = True,
+            title=figure_title,
+            autosize=True,
 
-            font = dict(
-                size = 22,
+            font=dict(
+                size=22,
             ),
 
-            xaxis = dict(
-                title = x_label,
-                showgrid = False,
+            xaxis=dict(
+                title=x_label,
+                showgrid=False,
                 titlefont=dict(
                     size=20,
                 ),
@@ -98,12 +103,12 @@ class PlotSystemWRTTime(object):
                     size=14,
                 ),
                 zerolinewidth=1,
-                ticks = 'outside',
+                ticks='outside',
             ),
 
-            yaxis = dict(
-                title = y_label,
-                showgrid = False,
+            yaxis=dict(
+                title=y_label,
+                showgrid=False,
                 titlefont=dict(
                     size=20,
                 ),
@@ -111,20 +116,18 @@ class PlotSystemWRTTime(object):
                     size=14,
                 ),
                 zerolinewidth=1,
-                ticks = 'inside',
+                ticks='inside',
             ),
 
-            legend = dict(
-                x = 1,
-                y = 1,
-                bordercolor = '#404040',
-                bgcolor = "rgba(255, 255, 255, 0.5)", 
-                borderwidth = 1,
-                font = dict(
-                    size = 16
-                ),
-                xanchor = 'right',
-                yanchor = 'top',
+            legend=dict(
+                x=1,
+                y=1,
+                bordercolor='#404040',
+                bgcolor="rgba(255, 255, 255, 0.5)",
+                borderwidth=1,
+                font=dict(size=16),
+                xanchor='right',
+                yanchor='top',
             ),
         )
 
@@ -146,7 +149,7 @@ class PlotSystemWRTTime(object):
         k_1 = 50
         a = 0.2
 
-        # y_2 
+        # y_2
         r_2 = 0.3
         k_2 = 60
         b = 0.6
@@ -158,16 +161,16 @@ class PlotSystemWRTTime(object):
         var_labels = ["Population 1", "Population 2"]
 
         # Equations
-        eqn1 = lambda x1,x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
-        eqn2 = lambda x1,x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
+        eqn1 = lambda x1, x2: r_1*x1 * (k_1 - x1 - a*x2) / k_1
+        eqn2 = lambda x1, x2: r_2*x2 * (k_2 - b*x1 - x2) / k_2
         eqn_list = [eqn1, eqn2]
 
         # Initial Conditions
-        init_conds = [1,1]
+        init_conds = [1, 1]
 
-        cls(x_start, x_end, steps, figure_title, x_label, y_label, 
+        cls(x_start, x_end, steps, figure_title, x_label, y_label,
             var_labels, eqn_list, init_conds)
-    
+
     @classmethod
     def demo2(cls):
         'Demo plot using equations and parameters from Dunster et al. (2015)'
@@ -193,7 +196,7 @@ class PlotSystemWRTTime(object):
         G_b1_0 = 0
         init_conds = [g_0, G_0, G_p_0, G_b0_0, G_b1_0, L_0, s_0]
 
-        # Domain 
+        # Domain
         x_start = 0
         x_end = 250
         steps = 2500
